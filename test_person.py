@@ -1,8 +1,7 @@
+# https://www.youtube.com/watch?v=k99HSHQDsi4
 import pytest
 
-class Person:
-    def greet(self):
-        return "Hello"
+from person import Person
 
 # Using a fixture helps create it automatically for each test
 @pytest.fixture

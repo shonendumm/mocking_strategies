@@ -26,3 +26,4 @@ def test_get_next_person_class(mock_get_random_person):
     actual_person = app.get_next_person(user)
     # assert
     assert actual_person == expected_person
+
