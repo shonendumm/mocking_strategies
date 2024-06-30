@@ -110,3 +110,34 @@ def test_autospec_with_class_autospec(mock_dog):
     # Verify that the constructor was called with the correct argument
     mock_dog.assert_called_once_with('doggy')
     assert dog.name == 'doggy'
+
+
+class SomeClass:
+    @classmethod
+    def class_method(cls, arg):
+        pass
+
+# Use patch.object to mock a class method
+@patch.object(SomeClass, 'class_method')
+def test(mock_method):
+    # call the original method
+    SomeClass.class_method(3)
+    # verify that the method was called with the correct argument
+    mock_method.assert_called_with(3)
+
+
+from unittest.mock import sentinel
+
+class ProductionClass:
+    def method(self):
+        self.something(1, 2, 3)
+    def something(self, a, b, c):
+        pass
+
+def test_same_object_with_sentinel():
+    real = ProductionClass()
+    real.method = Mock(name='method') #name is optional
+    # monkey patch method (replace func method on the class) to return sentinel.fixed_value
+    real.method.return_value = sentinel.fixed_value #  The sentinel attributes now preserve their identity when they are copied or pickled.
+    result = real.method()
+    assert result == sentinel.fixed_value
